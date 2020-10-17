@@ -10,15 +10,15 @@ const log = console.log;
 
 
 const Boxes = () => {
-    const [ height, setHeight ] = useState(6);
-    const [ width, setWidth ] = useState(6);
+    const [ columns ] = useState(6);
+    const [ rows ] = useState(6);
 
-    let rows = [];
+    let row = [];
     let cell = [];
-    for (var i = 0; i < height; i++) {
+    for (var i = 0; i < columns; i++) {
 
         let rowID = `row${i}`
-        for (var k = 0; k < width; k++) {
+        for (var k = 0; k < rows; k++) {
             let cellID = `cell${i}-${k}`
             cell.push(<td key={cellID} id={cellID} 
                  style={styles.cellStyle}
@@ -27,9 +27,10 @@ const Boxes = () => {
                  </td>)
                  
         }
-        rows.push(<tr key={i} id={rowID}>{cell}</tr>)
-        
-    };
+        row.push(<tr key={i} id={rowID}>{cell}</tr>)
+    }
+        log('Rows Array: ', rows);
+        log('Cells Array: ', cell);
 
     return (
         
@@ -37,7 +38,7 @@ const Boxes = () => {
                     <div className="board" style={styles.board}></div>
                         <table id="simple-board">
                             <tbody>
-                                {rows}
+                                {row}
                             </tbody>
                         </table>    
             </>
@@ -45,11 +46,16 @@ const Boxes = () => {
         )
 }
 
+
+
 function MainGrid() {
     return (
         <Grid container direction='row' justify='center' alignItems='center'>
             
                 <Boxes />
+               
+
+                
         
         </Grid>
         
@@ -64,7 +70,7 @@ const styles = {
         height: '4rem',
     },
     board: {
-        float: 'right',
+        padding: '1rem',
     }
 }
 
