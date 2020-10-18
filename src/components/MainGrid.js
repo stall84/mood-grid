@@ -5,42 +5,46 @@ import React, { useState } from 'react'
 import { Grid } from '@material-ui/core';
 
 
+
 /* AUXILIARY */
 const log = console.log;
 
 
 const Boxes = () => {
-    const [ columns ] = useState(6);
-    const [ rows ] = useState(6);
+    // const [ rows ] = useState(6);
+    // const [ columns ] = useState(4);
 
-    let row = [];
-    let cell = [];
-    for (var i = 0; i < columns; i++) {
-
-        let rowID = `row${i}`
-        for (var k = 0; k < rows; k++) {
-            let cellID = `cell${i}-${k}`
-            cell.push(<td key={cellID} id={cellID} 
-                 style={styles.cellStyle}
-                 onClick={e => log( `You Clicked Cell: ${e.target.id}`) }>
-                     /
-                 </td>)
-                 
-        }
-        row.push(<tr key={i} id={rowID}>{cell}</tr>)
+    const cellIdFunc = (e) => {
+       log( `${e.target.id} was clicked on` )
     }
-        log('Rows Array: ', rows);
-        log('Cells Array: ', cell);
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const twentyFourHrArr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
+    //let rows = [];
+    let weekCells = [];
+
+    for (var i = 0; i < 7; i++) {
+        const dayRows = [];
+        const rowID = `row${i}`
+            for (var h = 0; h < 24; h++) {
+                dayRows.push(
+                        <div id={`${i}-${h}`} style={styles.cellStyle}
+                        onClick={ cellIdFunc }>
+                        ^ 
+                        </div>
+                     )
+            }
+        weekCells.push(<div style={styles.rowStyle} id={rowID}>{dayRows}</div>)
+    }
 
     return (
         
             <>
                     <div className="board" style={styles.board}></div>
-                        <table id="simple-board">
-                            <tbody>
-                                {row}
-                            </tbody>
-                        </table>    
+                        <div id="simple-board">
+                            <div>
+                                {weekCells}
+                            </div>
+                        </div>    
             </>
         
         )
@@ -63,15 +67,19 @@ function MainGrid() {
 }
 
 const styles = {
+    rowStyle: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
     cellStyle: {
         background: '#b3f0f2',
         border: 'solid 1.6px #e45a30',
-        width: '4rem',
-        height: '4rem',
+        width: '3rem',
+        height: '3rem',
     },
     board: {
         padding: '1rem',
-    }
+    },
 }
 
 export default MainGrid;
